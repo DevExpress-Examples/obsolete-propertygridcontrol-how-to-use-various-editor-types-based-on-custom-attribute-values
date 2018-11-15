@@ -1,3 +1,10 @@
+<!-- default file list -->
+*Files to look at*:
+
+* [Helpers.cs](./CS/Helpers.cs) (VB: [Helpers.vb](./VB/Helpers.vb))
+* **[MainWindow.xaml](./CS/MainWindow.xaml) (VB: [MainWindow.xaml](./VB/MainWindow.xaml))**
+* [ViewModel.cs](./CS/ViewModel.cs) (VB: [ViewModel.vb](./VB/ViewModel.vb))
+<!-- default file list end -->
 # PropertyGridControl - How to use various editor types based on custom attribute values
 
 
