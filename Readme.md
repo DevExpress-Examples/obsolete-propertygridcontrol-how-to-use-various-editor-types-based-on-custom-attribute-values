@@ -1,4 +1,4 @@
-> <strong>IMPORTANT</strong>: Starting with version 15.2, we provide ready-to-use Editor Attributes. Please refer to the <a href="https://www.devexpress.com/Support/Center/p/T323108">How to: Configure the Way Properties Are Displayed and Edited at the Data Model Level</a> example where we demonstrated this approach. The solution demonstrated in the current example is no longer recommended, as it attempts to emulate the work <strong>PropertyGridControl</strong> performs internally and does not support all scenarios.
+> <strong>IMPORTANT</strong>: Starting with version <strong>15.2</strong>, we provide ready-to-use <strong>Editor Attributes</strong>. Please refer to the <a href="https://www.devexpress.com/Support/Center/p/T323108">How to: Configure the Way Properties Are Displayed and Edited at the Data Model Level</a> example where we demonstrated this approach. The solution demonstrated in the current example is no longer recommended, as it attempts to emulate the work <strong>PropertyGridControl</strong> performs internally and does not support all scenarios.
 
 <!-- default file list -->
 *Files to look at*:
