@@ -1,5 +1,3 @@
-> <strong>IMPORTANT</strong>: Starting with version <strong>15.2</strong>, we provide ready-to-use <strong>Editor Attributes</strong>. Please refer to the <a href="https://github.com/DevExpress-Examples/how-to-configure-the-way-properties-are-displayed-and-edited-at-the-data-model-level-t323108">How to: Configure the Way Properties Are Displayed and Edited at the Data Model Level</a> example where we demonstrated this approach. The solution demonstrated in the current example is no longer recommended, as it attempts to emulate the work <strong>PropertyGridControl</strong> performs internally and does not support all scenarios.
-
 <!-- default file list -->
 *Files to look at*:
 
@@ -7,6 +5,8 @@
 * **[MainWindow.xaml](./CS/MainWindow.xaml) (VB: [MainWindow.xaml](./VB/MainWindow.xaml))**
 * [ViewModel.cs](./CS/ViewModel.cs) (VB: [ViewModel.vb](./VB/ViewModel.vb))
 <!-- default file list end -->
+> <strong>IMPORTANT</strong>: Starting with version <strong>15.2</strong>, we provide ready-to-use <strong>Editor Attributes</strong>. Please refer to the <a href="https://github.com/DevExpress-Examples/how-to-configure-the-way-properties-are-displayed-and-edited-at-the-data-model-level-t323108">How to: Configure the Way Properties Are Displayed and Edited at the Data Model Level</a> example where we demonstrated this approach. The solution demonstrated in the current example is no longer recommended, as it attempts to emulate the work <strong>PropertyGridControl</strong> performs internally and does not support all scenarios.
+
 # PropertyGridControl - How to use various editor types based on custom attribute values
 
 
