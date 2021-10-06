@@ -12,14 +12,14 @@
         <local:ViewModel/>
     </Window.DataContext>
     <Window.Resources>
-        <local:PropertyDefinitionTemplateSelector x:Key="selector"/>
+        
         <DataTemplate x:Key="ButtonEditTemplate">
             <dxe:ButtonEdit Name="PART_Editor"/>
         </DataTemplate>
         <DataTemplate x:Key="CustomDefinitionTemplate">
             <dxprg:PropertyDefinition Path="{Binding Path}"
                                       PropertyDefinitionsSource="{Binding Path=., Converter={local:ObjectToPropertyDefinitionsSourceConverter}}"
-                                      PropertyDefinitionTemplateSelector="{StaticResource selector}">
+                                      PropertyDefinitionTemplateSelector="{DynamicResource selector}">
                 <dxprg:PropertyDefinition.CellTemplateSelector>
                     <local:CellTemplateSelector/>
                 </dxprg:PropertyDefinition.CellTemplateSelector>
@@ -28,15 +28,16 @@
         <DataTemplate x:Key="DefinitionTemplate">            
             <dxprg:PropertyDefinition Path="{Binding Path}"
                                       PropertyDefinitionsSource="{Binding Path=., Converter={local:ObjectToPropertyDefinitionsSourceConverter}}"
-                                      PropertyDefinitionTemplateSelector="{StaticResource selector}">
+                                      PropertyDefinitionTemplateSelector="{DynamicResource selector}">
             </dxprg:PropertyDefinition>
         </DataTemplate>
         <DataTemplate x:Key="CollectionDefinitionTemplate">
             <dxprg:CollectionDefinition Path="{Binding Path}"
                                         PropertyDefinitionsSource="{Binding Path=., Converter={local:ObjectToPropertyDefinitionsSourceConverter}}"
-                                        PropertyDefinitionTemplateSelector="{StaticResource selector}">
+                                        PropertyDefinitionTemplateSelector="{DynamicResource selector}">
             </dxprg:CollectionDefinition>
         </DataTemplate>
+        <local:PropertyDefinitionTemplateSelector x:Key="selector" DefinitionTemplate="{StaticResource DefinitionTemplate}" CustomDefinitionTemplate="{StaticResource CustomDefinitionTemplate}" CollectionDefinitionTemplate="{StaticResource CollectionDefinitionTemplate}"/>
     </Window.Resources>
     <dxprg:PropertyGridControl ExpandCategoriesWhenSelectedObjectChanged="True" SelectedObject="{Binding Department}" PropertyDefinitionsSource="{Binding Path=SelectedObject, RelativeSource={RelativeSource Self}, Converter={local:ObjectToPropertyDefinitionsSourceConverter}}" PropertyDefinitionTemplateSelector="{StaticResource selector}"/>
 </Window>

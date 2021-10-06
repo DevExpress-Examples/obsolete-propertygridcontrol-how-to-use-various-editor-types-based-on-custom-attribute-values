@@ -1,8 +1,8 @@
-﻿Imports System
 Imports System.Windows
 
 Namespace DXSample
-    Partial Public Class MainWindow
+
+    Public Partial Class MainWindow
         Inherits Window
 
         Public Sub New()
