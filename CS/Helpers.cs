@@ -1,8 +1,10 @@
 ﻿using DevExpress.Xpf.PropertyGrid;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -10,54 +12,59 @@ using System.Windows.Markup;
 
 namespace DXSample {
     public class ObjectToPropertyDefinitionsSourceConverter : MarkupExtension, IValueConverter {
-        public override object ProvideValue(IServiceProvider serviceProvider) {
+        public override object ProvideValue(System.IServiceProvider serviceProvider) {
             return this;
         }
-        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture) {
+        public object Convert(object value, System.Type targetType, object parameter, System.Globalization.CultureInfo culture) {
             Descriptor descriptor = value as Descriptor;
-            if (descriptor != null)
-                value = descriptor.PropertyDescriptor == null ? descriptor.Data : descriptor.PropertyDescriptor.GetValue(descriptor.Data);
-            IEnumerable collection = value as IEnumerable;
-            if (collection != null) {
-                int i = 0;
-                return collection.Cast<object>().Select(x => new Descriptor("[" + (i++) + "]", x, null));
+            if (descriptor != null) {
+                if (descriptor.PropertyDescriptor == null)
+                    value = descriptor.Data;
+                else {
+                    value = descriptor.PropertyDescriptor.GetValue(descriptor.Data);
+                    if (value is IEnumerable) {
+                        int i = 0;
+                        return ((IEnumerable)value).Cast<object>().Select(x => new Descriptor() { Path = "[" + (i++) + "]", Data = x, IsCollection = true }).ToList();
+                    }
+                }
             }
-            return value == null ? null : TypeDescriptor.GetProperties(value).Cast<PropertyDescriptor>().Select(x => new Descriptor(x.Name, value, x));
+            else if (value == null)
+                return null;
+            var props = TypeDescriptor.GetProperties(value);
+            return props.Cast<PropertyDescriptor>().Select(x => new Descriptor { PropertyDescriptor = x, Data = value, Path = x.Name });
         }
-        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture) {
-            throw new NotImplementedException();
+        public object ConvertBack(object value, System.Type targetType, object parameter, System.Globalization.CultureInfo culture) {
+            throw new System.NotImplementedException();
         }
     }
     public class Descriptor {
-        public string Path { get; }
-        public object Data { get; }
-        public PropertyDescriptor PropertyDescriptor { get; }
-        public bool IsCollection {
-            get {
-                if (PropertyDescriptor != null && Data != null)
-                    return PropertyDescriptor.GetValue(Data) is IEnumerable;
-                return Data is IEnumerable;
-            }
-        }
-        public Descriptor(string path, object data, PropertyDescriptor propertyDescriptor) {
-            Path = path;
-            Data = data;
-            PropertyDescriptor = propertyDescriptor;
-        }
+        public string Path { get; set; }
+        public object Data { get; set; }
+        public PropertyDescriptor PropertyDescriptor { get; set; }
+        public bool IsCollection { get; set; }
     }
     public class PropertyDefinitionTemplateSelector : DataTemplateSelector {
-        public DataTemplate DefinitionTemplate { get; set; }
-        public DataTemplate CollectionDefinitionTemplate { get; set; }
-        public DataTemplate CustomDefinitionTemplate { get; set; }
+        public DataTemplate DefinitionTemplate {
+            get;
+            set;
+        }
+        public DataTemplate CollectionDefinitionTemplate {
+            get;
+            set;
+        }
+        public DataTemplate CustomDefinitionTemplate {
+            get;
+            set;
+        }
         public override DataTemplate SelectTemplate(object item, DependencyObject container) {
             Descriptor descriptor = (Descriptor)item;
             PropertyDescriptor propertyDescriptor = descriptor.PropertyDescriptor;
             if (propertyDescriptor == null)
                 return DefinitionTemplate;
-            if (propertyDescriptor.Attributes.Cast<Attribute>().Where(n => n is CustomEditorAttribute).Any())
-                return CustomDefinitionTemplate;
             if (descriptor.IsCollection)
                 return CollectionDefinitionTemplate;
+            if (propertyDescriptor.Attributes.Cast<Attribute>().Where(n => n is CustomEditorAttribute).Any())
+                return CustomDefinitionTemplate;
             return DefinitionTemplate;
         }
     }
